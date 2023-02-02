@@ -1,0 +1,36 @@
+import express from 'express';
+import db from './src/database/db.js';
+import dotenv from 'dotenv';
+import cors from 'cors';
+
+/* rotas */
+import userRoute from './src/routes/user.route.js';
+import authRoute from './src/routes/auth.route.js';
+import newsRoute from './src/routes/news.route.js';
+
+
+
+const port = process.env.PORT || 3000;
+const app = express();
+
+
+
+/* configs */
+dotenv.config();
+app.use(cors());
+db();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
+/* serve  */
+
+app.use('/user', userRoute);
+app.use('/auth', authRoute);
+app.use('/news', newsRoute);
+
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+}
+)
